@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>FaceTest</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	 crossorigin="anonymous"></script>
+</head>
+<body>
+	
+	<div id="result">
+		
+	</div>
+
+
+
+</body>
+
+<script>
+	//Nessecary Values
+
+	// Emotions
+	var neutral = 51394.15;
+	var happy = 48215.45;
+	var contempt = 329.01;
+	var sad = 49.70;
+	var anger = 7.04;
+	var surprise = 2.61;
+	var disgust = 1.90;
+	var fear = 0.14;
+
+
+	var getMood = (first, second, third, num1, num2, num3) =>{
+		let result;
+		if(first == "neutral"){
+			result = second.concat(" slightly"); 
+			return result;
+		}
+
+		result = first.concat(" strongly")
+
+		return result;
+
+	};   
+
+
+	var getEmotionName = (emotion) => {
+
+		let result; 
+
+		if(emotion == neutral){
+			result = "neutral";
+		}
+		if(emotion == happy) {
+			result = "happy";
+		}
+		if(emotion == contempt){
+			result = "contempt";
+		}
+		if (emotion == sad) {
+				result = "sad";
+			}
+		if (emotion == anger) {
+				result = "anger";
+			}
+		if (emotion == surprise) {
+				result = "surprise";
+			}
+		if (emotion == disgust) {
+				result = "disgust";
+			}
+		if (emotion == fear) {
+				result = "fear";
+			}
+
+		return result;
+	};
+
+
+		var calculateBigEmotion = (arrayOfEmotions) => {
+					var index = 0;
+					var mainEmotion = 0;
+					var foundBigest = false;
+
+				console.log("This is the array", arrayOfEmotions);
+
+				var size = arrayOfEmotions.length;
+
+				for (var i = size; i >= 0; i--) {
+					//console.log(`Emotion at ${i}`, arrayOfEmotions[i]);
+
+					if (arrayOfEmotions[i] > arrayOfEmotions[i - 1]) {
+						if (mainEmotion < arrayOfEmotions[i]) {
+							mainEmotion = arrayOfEmotions[i];
+							console.log("This is the main emotion", mainEmotion)
+							foundBigest = true;
+							index = i;
+						}
+					}			
+				}
+
+				if(mainEmotion < arrayOfEmotions[0]) {
+						mainEmotion = arrayOfEmotions[0];
+					}		
+
+				return mainEmotion;
+
+		};
+
+	var arrayOfEmotions = [happy, anger, fear, disgust, neutral, contempt, sad, surprise];
+
+	var primaryEmotion = calculateBigEmotion(arrayOfEmotions);
+
+	var nameOfPrimary = getEmotionName(primaryEmotion);
+
+	var indexOfPrimary = arrayOfEmotions.indexOf(primaryEmotion);
+
+	arrayOfEmotions.splice(indexOfPrimary,1);
+
+	console.log(`${nameOfPrimary} : ${primaryEmotion}`);
+
+
+	var secondaryEmotion = calculateBigEmotion(arrayOfEmotions);
+
+	var nameOfSecondary = getEmotionName(secondaryEmotion);
+
+	var indexOfSecondary = arrayOfEmotions.indexOf(secondaryEmotion);
+
+	arrayOfEmotions.splice(indexOfSecondary, 1);
+
+	console.log(`${nameOfSecondary} : ${secondaryEmotion}`);
+
+
+	var thirdEmotion = calculateBigEmotion(arrayOfEmotions);
+
+	var nameOfThird = getEmotionName(thirdEmotion);
+
+	var indexOfThird = arrayOfEmotions.indexOf(thirdEmotion);
+
+	arrayOfEmotions.splice(indexOfThird, 1);
+
+
+	console.log(`${nameOfThird} : ${thirdEmotion}`);
+
+
+	var masterEmotion = getMood(nameOfPrimary, nameOfSecondary, nameOfThird, primaryEmotion, secondaryEmotion, thirdEmotion);
+
+
+	
+
+
+
+</script>
+
+
+</html>
+
+
+
+{# 
+    console.log("process");
+    console.log(angerNum);
+
+    if ((angerNum > contemptNum) && (angerNum > disgustNum) && (angerNum > fearNum) && (angerNum > happinessNum) && (angerNum > neutralNum)
+      && (angerNum > sadnessNum) && (angerNum > surpriseNum)){
+         console.log("Anger is the biggest: " + angerNum);
+         console.log("You are angry");
+
+        emotion = "angry";
+       // return emotion;
+    }
+
+
+    if ((happinessNum > contemptNum) && (happinessNum > disgustNum) && (happinessNum > fearNum)
+      && (happinessNum > angerNum) && (happinessNum > neutralNum)
+      && (happinessNum > sadnessNum) && (happinessNum > surpriseNum)){
+        console.log("Happiness is the biggest: " + happinessNum);
+        console.log("You are happy");
+
+        // set emtion = to 
+        emotion = "happy";
+        // return emotion;
+    }
+
+
+    if ((neutralNum > contemptNum) && (neutralNum > disgustNum) && (neutralNum > fearNum) && (neutralNum > happinessNum) && (neutralNum > angerNum)
+      && (neutralNum > sadnessNum) && (neutralNum > surpriseNum)){
+        console.log("Anger is the biggest: " + angerNum);
+        console.log("You are Angry")
+
+        emotion = "angry";
+        // return emotion;
+    }
+
+
+    if ((contemptNum > neutralNum) && (contemptNum > disgustNum) && (contemptNum > fearNum) && (contemptNum > happinessNum)
+      && (contemptNum > angerNum) && (contemptNum > sadnessNum) && (contemptNum > surpriseNum)){
+        console.log("contempt is the biggest: " + contemptNum);
+        console.log("You are contemptious");
+
+        emotion = "contempt";
+        // return emotion;
+    }
+
+
+    if ((disgustNum > contemptNum) && (disgustNum > neutralNum) && (disgustNum > fearNum) && (disgustNum > happinessNum) && (disgustNum > angerNum)
+      && (disgustNum > sadnessNum) && (disgustNum > surpriseNum)){
+        console.log("Disgust is the biggest: " + disgustNum);
+        console.log("You are disgusted");
+
+        emotion = "disgusted";
+        // return emotion;
+    }
+
+    if ((fearNum > contemptNum) && (fearNum > neutralNum) && (fearNum > disgustNum) && (fearNum > happinessNum) && (fearNum > angerNum)
+      && (fearNum > sadnessNum) && (fearNum > surpriseNum)){
+        console.log("Fear is the biggest: " + fearNum);
+        console.log("You are fearful");
+
+        emotion = "fear";
+        // return emotion;
+    }
+
+
+    if ((sadnessNum > contemptNum) && (sadnessNum > neutralNum) && (sadnessNum > disgustNum) && (sadnessNum > happinessNum)
+      && (sadnessNum > angerNum) && (sadnessNum > fearNum) && (sadnessNum > surpriseNum)){
+        console.log("Sadness is the biggest: " + sadnessNum);
+        console.log("You are sad");
+
+        emotion = "sad";
+        // return emotion;
+    }
+
+    if ((surpriseNum > contemptNum) && (surpriseNum > neutralNum) && (surpriseNum > disgustNum) && (surpriseNum > happinessNum)
+      && (surpriseNum > angerNum) && (surpriseNum > sadnessNum) && (surpriseNum > fearNum)){
+        console.log("Surprise is the biggest: " + surpriseNum);
+        console.log("You are surprised");
+
+
+        emotion = "surprise";
+        // return emotion;
+    } #}
